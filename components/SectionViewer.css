@@ -1,0 +1,79 @@
+.viewer-wrap {
+    margin-left: 320px;
+    /* место под меню */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.viewer-perspective {
+    width: 100%;
+    max-width: 900px;
+    perspective: 1600px;
+    /* сила 3D-эффекта */
+}
+
+.viewer-stage {
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    will-change: transform, opacity;
+}
+
+
+/* УХОД: старый раздел вращается в сторону */
+
+.viewer-stage.phase-out.dir-1 {
+    transform: rotateY(-90deg) scale(0.9);
+    opacity: 0;
+}
+
+.viewer-stage.phase-out.dir--1 {
+    transform: rotateY(90deg) scale(0.9);
+    opacity: 0;
+}
+
+
+/* ПРИХОД: новый раздел выезжает с противоположной стороны */
+
+.viewer-stage.phase-in.dir-1 {
+    animation: rotateInRight 0.4s ease-out forwards;
+}
+
+.viewer-stage.phase-in.dir--1 {
+    animation: rotateInLeft 0.4s ease-out forwards;
+}
+
+@keyframes rotateInRight {
+    from {
+        transform: rotateY(90deg) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: rotateY(0deg) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes rotateInLeft {
+    from {
+        transform: rotateY(-90deg) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: rotateY(0deg) scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* на мобилке меню сверху — сдвигаем контент */
+
+@media (max-width: 900px) {
+    .viewer-wrap {
+        margin-left: 0;
+        margin-top: 120px;
+        min-height: calc(100vh - 120px);
+    }
+}

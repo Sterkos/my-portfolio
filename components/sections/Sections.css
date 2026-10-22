@@ -1,0 +1,74 @@
+.section-card {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform-style: preserve-3d;
+}
+
+.section-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.section-card h3 {
+    font-size: 1.2rem;
+}
+
+.section-card h4 {
+    margin: 20px 0 8px;
+    color: var(--accent);
+    font-size: 1rem;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+}
+
+.tags li {
+    padding: 4px 12px;
+    background: var(--border);
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+
+.list {
+    padding-left: 20px;
+}
+
+.list li {
+    margin: 4px 0;
+}
+
+.diploma-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.year {
+    color: var(--muted);
+    font-family: monospace;
+}
+
+.actions {
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}

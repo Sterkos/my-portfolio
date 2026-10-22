@@ -1,0 +1,120 @@
+.menu-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    pointer-events: none;
+    /* пропускаем клики мимо круга */
+}
+
+.menu-circle {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    pointer-events: auto;
+}
+
+.menu-center {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #0f172a;
+    font-family: monospace;
+    font-weight: 700;
+    box-shadow: 0 0 40px rgba(56, 189, 248, 0.4);
+}
+
+.menu-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    transition: transform 0.3s ease, color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-item .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.menu-item .label {
+    position: absolute;
+    left: 26px;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+}
+
+.menu-item:hover .label,
+.menu-item.active .label {
+    opacity: 1;
+}
+
+.menu-item:hover .dot {
+    background: var(--accent);
+}
+
+.menu-item.active .dot {
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.25);
+    transform: scale(1.4);
+}
+
+.menu-item.active {
+    color: var(--accent);
+}
+
+.menu-item:disabled {
+    cursor: default;
+    opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+    .menu-wrap {
+        width: 100%;
+        bottom: auto;
+        top: 0;
+        height: 120px;
+        background: rgba(15, 23, 42, 0.9);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--border);
+    }
+    .menu-circle {
+        width: 100px;
+        height: 100px;
+    }
+    .menu-center {
+        width: 48px;
+        height: 48px;
+        font-size: 0.7rem;
+    }
+    .menu-item .label {
+        display: none;
+    }
+}
