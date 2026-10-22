@@ -20,37 +20,32 @@ export default function SectionViewer({ activeIndex, direction, isAnimating }) {
   const [phase, setPhase] = useState("idle"); // idle | out | in
   const prevIndexRef = useRef(activeIndex);
 
+  // 1. Когда родитель запускает анимацию, начинаем фазу "out" (уход)
+  // Добавили проверку, чтобы не вызывать setState без надобности
   useEffect(() => {
-    if (isAnimating) {
-      // Фаза "out" начинается, когда родитель запустил анимацию
+    if (isAnimating && phase !== "out") {
       setPhase("out");
-    } else if (prevIndexRef.current !== activeIndex) {
-      // пришёл новый activeIndex — запускаем "in"
+    }
+  }, [isAnimating, phase]);
+
+  // 2. Когда activeIndex меняется (родитель сменил вкладку), запускаем фазу "in" (приход)
+  useEffect(() => {
+    if (prevIndexRef.current !== activeIndex) {
       prevIndexRef.current = activeIndex;
       setPhase("in");
-      const t = setTimeout(() => setPhase("idle"), 400);
-      return () => clearTimeout(t);
+      
+      const timer = setTimeout(() => setPhase("idle"), 400);
+      return () => clearTimeout(timer);
     }
-  }, [activeIndex, isAnimating]);
+  }, [activeIndex]);
 
-  // Когда родитель сообщает isAnimating=true — играем "out"
-  useEffect(() => {
-    if (isAnimating) {
-      setPhase("out");
-    } else if (phase === "out") {
-      setPhase("in");
-      const t = setTimeout(() => setPhase("idle"), 400);
-      return () => clearTimeout(t);
-    }
-  }, [isAnimating]); // eslint-disable-line
-
-  const Active = COMPONENTS[activeIndex];
+  const ActiveComponent = COMPONENTS[activeIndex];
 
   return (
     <main className="viewer-wrap">
       <div className="viewer-perspective">
         <div className={`viewer-stage phase-${phase} dir-${direction}`}>
-          <Active />
+          <ActiveComponent />
         </div>
       </div>
     </main>
