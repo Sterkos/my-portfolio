@@ -1,79 +1,110 @@
 .viewer-wrap {
-    margin-left: 320px;
-    /* место под меню */
+    margin-left: 340px;
+    /* Отступ под меню */
     min-height: 100vh;
     display: flex;
     align-items: center;
+    /* Центрирование по вертикали */
     justify-content: center;
-    padding: 40px 24px;
+    /* Центрирование по горизонтали */
+    padding: 40px;
+    perspective: 2000px;
+    width: calc(100% - 340px);
 }
 
 .viewer-perspective {
     width: 100%;
     max-width: 900px;
-    perspective: 1600px;
-    /* сила 3D-эффекта */
 }
 
 .viewer-stage {
     transform-style: preserve-3d;
-    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
     will-change: transform, opacity;
+    transform-origin: center center -200px;
+    /* Для эффекта барабана */
 }
 
 
-/* УХОД: старый раздел вращается в сторону */
+/* Уход старого контента (крутится вверх/вниз) */
 
 .viewer-stage.phase-out.dir-1 {
-    transform: rotateY(-90deg) scale(0.9);
+    transform: rotateX(-90deg) translateZ(100px);
     opacity: 0;
 }
 
 .viewer-stage.phase-out.dir--1 {
-    transform: rotateY(90deg) scale(0.9);
+    transform: rotateX(90deg) translateZ(100px);
     opacity: 0;
 }
 
 
-/* ПРИХОД: новый раздел выезжает с противоположной стороны */
+/* Приход нового контента */
 
 .viewer-stage.phase-in.dir-1 {
-    animation: rotateInRight 0.4s ease-out forwards;
+    animation: rotateInDown 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 .viewer-stage.phase-in.dir--1 {
-    animation: rotateInLeft 0.4s ease-out forwards;
+    animation: rotateInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-@keyframes rotateInRight {
-    from {
-        transform: rotateY(90deg) scale(0.9);
+@keyframes rotateInDown {
+    0% {
+        transform: rotateX(90deg) translateZ(100px);
         opacity: 0;
     }
-    to {
-        transform: rotateY(0deg) scale(1);
+    100% {
+        transform: rotateX(0deg) translateZ(0);
         opacity: 1;
     }
 }
 
-@keyframes rotateInLeft {
-    from {
-        transform: rotateY(-90deg) scale(0.9);
+@keyframes rotateInUp {
+    0% {
+        transform: rotateX(-90deg) translateZ(100px);
         opacity: 0;
     }
-    to {
-        transform: rotateY(0deg) scale(1);
+    100% {
+        transform: rotateX(0deg) translateZ(0);
         opacity: 1;
     }
 }
 
 
-/* на мобилке меню сверху — сдвигаем контент */
+/* Карточка */
+
+.parallax-card {
+    transition: transform 0.1s ease-out, box-shadow 0.5s ease, border-color 0.5s ease;
+    transform-style: preserve-3d;
+    border-radius: var(--radius);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+}
+
+
+/* Эффект от НЛО */
+
+.parallax-card.card-scanned {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 -10px 40px rgba(16, 185, 129, 0.3), inset 0 0 20px rgba(16, 185, 129, 0.1);
+    border-color: var(--accent);
+}
+
+.card-scanned>.section-card {
+    background: rgba(25, 30, 35, 0.8) !important;
+}
+
+
+/* Мобильная версия */
 
 @media (max-width: 900px) {
     .viewer-wrap {
         margin-left: 0;
-        margin-top: 120px;
-        min-height: calc(100vh - 120px);
+        margin-top: 100px;
+        /* Отступ под мобильное меню сверху */
+        min-height: calc(100vh - 100px);
+        padding: 20px;
+        width: 100%;
     }
 }
